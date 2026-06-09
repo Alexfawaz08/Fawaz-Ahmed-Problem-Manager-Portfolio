@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Fawaz Ahmed Mujawar | Problem Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --red: #E8002D;
+  --red-dark: #a50020;
+  --gold: #FFD700;
+  --gold-dim: #c9a800;
+  --black: #0a0a0a;
+  --dark: #111111;
+  --panel: #161616;
+  --panel2: #1c1c1c;
+  --border: #2a2a2a;
+  --text: #f0f0f0;
+  --muted: #888;
+  --white: #ffffff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--text);font-family:'Barlow',sans-serif;overflow-x:hidden}
+
+/* ANIMATED TRACK BACKGROUND */
+body::before{
+  content:'';position:fixed;top:0;left:0;width:100%;height:100%;
+  background:repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(232,0,45,0.025) 80px,rgba(232,0,45,0.025) 81px);
+  pointer-events:none;z-index:0;
+}
+
+/* NAVBAR */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:60px;background:rgba(10,10,10,0.92);border-bottom:2px solid var(--red);backdrop-filter:blur(12px)}
+.nav-logo{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:var(--red);letter-spacing:3px;text-transform:uppercase}
+.nav-links{display:flex;gap:28px}
+.nav-links a{color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:color 0.2s}
+.nav-links a:hover{color:var(--red)}
+.nav-flag{display:flex;gap:3px;align-items:center}
+.flag-strip{width:3px;height:18px;border-radius:1px}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:100px 5% 60px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-track{position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(to top,rgba(232,0,45,0.07),transparent);border-top:1px solid rgba(232,0,45,0.2)}
+.hero-lines{position:absolute;inset:0;overflow:hidden}
+.hero-lines::before,.hero-lines::after{content:'';position:absolute;height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent);animation:scanline 4s linear infinite}
+.hero-lines::before{top:35%;animation-delay:0s;opacity:0.4}
+.hero-lines::after{top:65%;animation-delay:2s;opacity:0.2}
+@keyframes scanline{0%{left:-100%;right:100%}100%{left:100%;right:-100%}}
+
+.speed-lines{position:absolute;right:0;top:0;bottom:0;width:55%;overflow:hidden;opacity:0.12}
+.speed-line{position:absolute;height:1px;background:linear-gradient(90deg,transparent,var(--red) 60%,var(--gold));right:0;animation:speed 1.8s linear infinite}
+.speed-line:nth-child(1){top:20%;width:70%;animation-delay:0s}
+.speed-line:nth-child(2){top:30%;width:85%;animation-delay:0.15s}
+.speed-line:nth-child(3){top:40%;width:60%;animation-delay:0.3s}
+.speed-line:nth-child(4){top:50%;width:90%;animation-delay:0.05s}
+.speed-line:nth-child(5){top:60%;width:75%;animation-delay:0.4s}
+.speed-line:nth-child(6){top:70%;width:65%;animation-delay:0.2s}
+.speed-line:nth-child(7){top:80%;width:80%;animation-delay:0.35s}
+@keyframes speed{0%{transform:scaleX(0);transform-origin:right}50%{transform:scaleX(1);transform-origin:right}100%{transform:scaleX(0);transform-origin:right}}
+
+.hero-content{position:relative;z-index:1;max-width:780px}
+.race-number{font-family:'Orbitron',monospace;font-size:120px;font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(232,0,45,0.2);position:absolute;right:5%;top:50%;transform:translateY(-50%);line-height:1;pointer-events:none;user-select:none;z-index:0}
+
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:var(--red);color:white;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:6px 16px;border-radius:2px;margin-bottom:20px}
+.hero-tag::before{content:'';width:8px;height:8px;background:white;border-radius:50%;animation:blink 1.2s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+h1.driver-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(52px,8vw,88px);font-weight:900;line-height:0.9;text-transform:uppercase;letter-spacing:-2px;margin-bottom:6px}
+h1.driver-name span{color:var(--red)}
+.driver-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.driver-bio{font-size:16px;color:#bbb;line-height:1.7;max-width:580px;margin-bottom:30px}
+.contact-strip{display:flex;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:36px}
+.contact-strip span{display:flex;align-items:center;gap:6px}
+.contact-strip span::before{content:'▸';color:var(--red);font-size:10px}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{background:var(--red);color:white;border:none;padding:14px 32px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:background 0.2s,transform 0.1s}
+.btn-primary:hover{background:var(--red-dark);transform:translateY(-1px)}
+.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border);padding:14px 32px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:border-color 0.2s,color 0.2s}
+.btn-secondary:hover{border-color:var(--red);color:var(--red)}
+
+/* TIMING BOARD - STATS */
+.section{padding:80px 5%;position:relative;z-index:1}
+.section-label{font-family:'Orbitron',monospace;font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(36px,5vw,52px);font-weight:900;text-transform:uppercase;letter-spacing:-1px;margin-bottom:48px;line-height:1}
+.section-title span{color:var(--red)}
+
+.timing-board{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;background:var(--border);border:1px solid var(--border)}
+.timing-cell{background:var(--panel);padding:28px 24px;position:relative;overflow:hidden;transition:background 0.2s}
+.timing-cell:hover{background:var(--panel2)}
+.timing-cell::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--red)}
+.timing-cell .t-label{font-family:'Orbitron',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.timing-cell .t-value{font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:6px}
+.timing-cell .t-desc{font-size:12px;color:var(--muted);line-height:1.4}
+.timing-cell .t-delta{position:absolute;top:16px;right:16px;font-family:'Orbitron',monospace;font-size:10px;color:var(--red);font-weight:700}
+
+/* RACE CAREER */
+.career-section{background:var(--panel);border-top:2px solid var(--red);border-bottom:1px solid var(--border)}
+.career-inner{max-width:1200px;margin:0 auto;padding:80px 5%}
+.career-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+@media(max-width:768px){.career-grid{grid-template-columns:1fr}}
+
+.race-entry{border-left:2px solid var(--border);padding-left:24px;margin-bottom:40px;position:relative;transition:border-color 0.3s}
+.race-entry:hover{border-color:var(--red)}
+.race-entry::before{content:'';position:absolute;left:-6px;top:8px;width:10px;height:10px;background:var(--panel);border:2px solid var(--border);border-radius:50%;transition:border-color 0.3s,background 0.3s}
+.race-entry:hover::before{border-color:var(--red);background:var(--red)}
+.race-entry .team-badge{display:inline-flex;align-items:center;gap:8px;background:var(--red);color:white;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;padding:4px 12px;border-radius:2px;margin-bottom:10px;text-transform:uppercase}
+.race-entry h3{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;text-transform:uppercase;margin-bottom:4px;letter-spacing:0.5px}
+.race-entry .meta{font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;font-family:'Orbitron',monospace}
+.race-entry ul{list-style:none;padding:0}
+.race-entry ul li{font-size:14px;color:#bbb;padding:5px 0;padding-left:16px;position:relative;line-height:1.5}
+.race-entry ul li::before{content:'▸';position:absolute;left:0;color:var(--red);font-size:10px;top:7px}
+
+/* SKILL TAGS */
+.skills-section{background:var(--black)}
+.skills-cloud{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.skill-tag{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:8px 18px;border:1px solid var(--border);color:var(--muted);border-radius:2px;transition:all 0.2s;cursor:default}
+.skill-tag:hover,.skill-tag.active{background:var(--red);color:white;border-color:var(--red)}
+.skill-tag.gold{border-color:var(--gold-dim);color:var(--gold)}
+.skill-tag.gold:hover{background:var(--gold);color:var(--black);border-color:var(--gold)}
+
+/* PROJECT CARDS — RACE DOSSIER */
+.dossier-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2px;background:var(--border)}
+.dossier-card{background:var(--panel);padding:28px;position:relative;overflow:hidden;transition:background 0.25s;cursor:pointer}
+.dossier-card:hover{background:var(--panel2)}
+.dossier-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--red);transition:width 0.4s ease}
+.dossier-card:hover::after{width:100%}
+.dossier-card .card-num{font-family:'Orbitron',monospace;font-size:11px;color:var(--red);letter-spacing:2px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.dossier-card .card-num .duration-pill{font-size:10px;color:var(--muted);background:var(--panel2);padding:3px 10px;border-radius:30px;border:1px solid var(--border)}
+.dossier-card h3{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;text-transform:uppercase;margin-bottom:10px;letter-spacing:0.5px;line-height:1.2}
+.dossier-card p{font-size:13px;color:#999;line-height:1.6;margin-bottom:16px}
+.result-flag{background:rgba(22,163,74,0.1);border-left:3px solid #16a34a;padding:12px 14px;font-size:13px;color:#86efac;line-height:1.5;border-radius:0 4px 4px 0;margin-bottom:12px}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px}
+.mini-tag{font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);padding:3px 8px;border-radius:2px}
+
+/* CERTIFICATIONS — PODIUM */
+.podium-section{background:var(--panel);border-top:1px solid var(--border)}
+.cert-list{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px}
+.cert-item{display:flex;align-items:center;gap:10px;background:var(--panel2);border:1px solid var(--border);padding:12px 20px;border-radius:2px;font-size:14px;font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:1px;text-transform:uppercase;transition:border-color 0.2s}
+.cert-item:hover{border-color:var(--gold-dim);color:var(--gold)}
+.cert-item::before{content:'🏆';font-size:14px}
+
+/* TOOLS */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:2px;background:var(--border);margin-top:24px}
+.tool-item{background:var(--panel);padding:20px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);transition:all 0.2s;cursor:default}
+.tool-item:hover{background:var(--panel2);color:var(--text)}
+
+/* FINISH LINE */
+.finish{background:var(--black);border-top:2px solid var(--red);padding:60px 5%;text-align:center;position:relative;overflow:hidden;z-index:1}
+.finish::before{content:'FINISH';position:absolute;font-family:'Barlow Condensed',sans-serif;font-size:200px;font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.03);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;white-space:nowrap}
+.finish h2{font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;margin-bottom:16px}
+.finish h2 span{color:var(--red)}
+.finish p{color:var(--muted);font-size:16px;max-width:600px;margin:0 auto 32px}
+.contact-cards{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.contact-card{background:var(--panel);border:1px solid var(--border);padding:16px 28px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);transition:all 0.2s;border-radius:2px;cursor:pointer}
+.contact-card:hover{border-color:var(--red);color:var(--red)}
+
+/* CHECKERED DIVIDER */
+.checkered{height:6px;background-image:repeating-linear-gradient(90deg,white 0,white 12px,black 12px,black 24px),repeating-linear-gradient(0deg,white 0,white 3px,black 3px,black 6px);background-blend-mode:difference;opacity:0.6;margin:0}
+
+/* SCROLL ANIMATIONS */
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* SECTOR INDICATOR */
+.sector-bar{position:fixed;left:0;top:60px;width:3px;height:0%;background:linear-gradient(to bottom,var(--red),var(--gold));z-index:99;transition:height 0.1s linear}
+
+footer{background:var(--black);border-top:1px solid var(--border);padding:24px 5%;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--muted);font-family:'Orbitron',monospace;letter-spacing:1px;position:relative;z-index:1}
+footer span{color:var(--red)}
+
+@media(max-width:600px){
+  .race-number{font-size:60px;right:2%}
+  nav .nav-links{display:none}
+  .timing-cell .t-value{font-size:38px}
+}
+</style>
+</head>
+<body>
+
+<div class="sector-bar" id="sectorBar"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">FAM · P26</div>
+  <div class="nav-links">
+    <a href="#stats">Telemetry</a>
+    <a href="#career">Career</a>
+    <a href="#projects">Race Log</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Pit Lane</a>
+  </div>
+  <div class="nav-flag">
+    <div class="flag-strip" style="background:#ff9933"></div>
+    <div class="flag-strip" style="background:#ffffff"></div>
+    <div class="flag-strip" style="background:#138808"></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-track"></div>
+    <div class="hero-lines"></div>
+    <div class="speed-lines">
+      <div class="speed-line"></div>
+      <div class="speed-line"></div>
+      <div class="speed-line"></div>
+      <div class="speed-line"></div>
+      <div class="speed-line"></div>
+      <div class="speed-line"></div>
+      <div class="speed-line"></div>
+    </div>
+  </div>
+  <div class="race-number">26</div>
+  <div class="hero-content fade-up visible">
+    <div class="hero-tag">Available for opportunities</div>
+    <h1 class="driver-name">Fawaz<br/><span>Ahmed</span><br/>Mujawar</h1>
+    <div class="driver-title">Problem Manager · ITIL · ServiceNow · RCA</div>
+    <p class="driver-bio">
+      Problem Manager and Critical Incident Manager with 5+ years leading enterprise service stability, root cause analysis, major incident recovery, and operational resilience across high-availability production environments.
+    </p>
+    <div class="contact-strip">
+      <span>Bengaluru, India</span>
+      <span>+91 7795751979</span>
+      <span>08fawazahmed@gmail.com</span>
+    </div>
+    <div class="cta-row">
+      <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact Me</button>
+      <button class="btn-secondary" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View Race Log</button>
+    </div>
+  </div>
+</section>
+
+<div class="checkered"></div>
+
+<!-- STATS — TIMING BOARD -->
+<section class="section" id="stats" style="background:var(--black);padding-bottom:0">
+  <div class="section-label">Sector 1 · Telemetry</div>
+  <div class="section-title">Performance<br/><span>Data</span></div>
+</section>
+<div class="timing-board fade-up" style="margin:0 5% 80px;position:relative;z-index:1">
+  <div class="timing-cell">
+    <div class="t-label">Total Experience</div>
+    <div class="t-value">5+</div>
+    <div class="t-desc">Years in ITSM, Problem & Critical Incident Management</div>
+    <div class="t-delta">YRS</div>
+  </div>
+  <div class="timing-cell">
+    <div class="t-label">RCA Investigations</div>
+    <div class="t-value">150+</div>
+    <div class="t-desc">Root Cause Analyses led for major & recurring incidents</div>
+    <div class="t-delta">CASES</div>
+  </div>
+  <div class="timing-cell">
+    <div class="t-label">Incident Reduction</div>
+    <div class="t-value">25%</div>
+    <div class="t-desc">Fewer recurring incidents through proactive Problem Management</div>
+    <div class="t-delta">↓</div>
+  </div>
+  <div class="timing-cell">
+    <div class="t-label">Resolution Efficiency</div>
+    <div class="t-value">40%</div>
+    <div class="t-desc">Improvement via KEDB optimization &amp; knowledge governance</div>
+    <div class="t-delta">↑</div>
+  </div>
+</div>
+
+<!-- CAREER -->
+<div class="career-section" id="career">
+  <div class="career-inner">
+    <div class="section-label">Sector 2 · Race History</div>
+    <div class="section-title" style="margin-bottom:48px">Career<br/><span>Lap Times</span></div>
+    <div class="career-grid fade-up">
+      <div>
+        <div class="race-entry">
+          <div class="team-badge">Cognizant Technology Solutions</div>
+          <h3>Problem Manager</h3>
+          <div class="meta">Jan 2021 — Aug 2025 · Bengaluru</div>
+          <ul>
+            <li>Managed end-to-end Problem Management lifecycle for enterprise apps and infrastructure</li>
+            <li>Led 150+ RCA investigations for major incidents and high-impact service disruptions</li>
+            <li>Facilitated Problem Review Boards, PIRs, and executive governance meetings</li>
+            <li>KEDB governance contributing to 40% improvement in problem resolution efficiency</li>
+            <li>Delivered RCA reports, dashboards, KPI packs, and operational risk briefings</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="race-entry">
+          <div class="team-badge">Cognizant Technology Solutions</div>
+          <h3>Critical Incident Manager</h3>
+          <div class="meta">Jan 2020 — Jan 2021 · Bengaluru</div>
+          <ul>
+            <li>Directed P1 and P2 incident response across global production environments</li>
+            <li>Led technical bridge calls with application, infrastructure, cloud, and vendor teams</li>
+            <li>Managed stakeholder communications, escalations, and service restoration</li>
+            <li>Transitioned recurring incidents into Problem Management for long-term remediation</li>
+          </ul>
+        </div>
+        <div class="race-entry" style="margin-top:36px">
+          <div class="team-badge" style="background:var(--panel2);border:1px solid var(--border);color:var(--gold)">Education</div>
+          <h3>B.E. Mechanical Engineering</h3>
+          <div class="meta">KLS Gogte Institute of Technology · Belagavi</div>
+          <ul>
+            <li>Bachelor of Engineering — Mechanical Engineering</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS — RACE LOG -->
+<section class="section" id="projects" style="background:var(--black);padding-bottom:0">
+  <div class="section-label">Sector 3 · Mission Dossier</div>
+  <div class="section-title">Race<br/><span>Log</span></div>
+</section>
+<div class="dossier-grid fade-up" style="margin:0 5% 80px;position:relative;z-index:1">
+
+  <div class="dossier-card">
+    <div class="card-num">MISSION 01 <span class="duration-pill">Jan 2023 – Aug 2025</span></div>
+    <h3>Enterprise Service Stability Improvement</h3>
+    <p>Led proactive service stability initiative across application, infrastructure, cloud, network, and database environments. Standardized RCA governance and remediation tracking.</p>
+    <div class="result-flag">▶ Reduced recurring incidents by 25%, improved proactive problem identification across all towers.</div>
+    <div class="tag-row">
+      <span class="mini-tag">Problem Mgmt</span><span class="mini-tag">ITIL</span><span class="mini-tag">RCA</span><span class="mini-tag">ServiceNow</span><span class="mini-tag">CAPA</span>
+    </div>
+  </div>
+
+  <div class="dossier-card">
+    <div class="card-num">MISSION 02 <span class="duration-pill">Jan 2022 – Dec 2024</span></div>
+    <h3>Known Error Database Optimization</h3>
+    <p>Owned KEDB redesign to improve workaround access, knowledge sharing, and support team productivity. Improved documentation standards and review cycles.</p>
+    <div class="result-flag">▶ 40% improvement in problem resolution efficiency. Eliminated repetitive troubleshooting cycles.</div>
+    <div class="tag-row">
+      <span class="mini-tag">KEDB</span><span class="mini-tag">ServiceNow</span><span class="mini-tag">Knowledge Mgmt</span><span class="mini-tag">Process Improvement</span>
+    </div>
+  </div>
+
+  <div class="dossier-card">
+    <div class="card-num">MISSION 03 <span class="duration-pill">Jan 2024 – Aug 2025</span></div>
+    <h3>AI-Assisted Incident Trend Analysis</h3>
+    <p>Introduced AI-assisted analytics to improve incident correlation, recurring issue detection, and proactive risk identification from large incident datasets.</p>
+    <div class="result-flag">▶ Accelerated RCA cycles, reduced manual analysis effort, improved recurring issue detection speed.</div>
+    <div class="tag-row">
+      <span class="mini-tag">Gen AI</span><span class="mini-tag">Power BI</span><span class="mini-tag">Data Analytics</span><span class="mini-tag">Excel</span>
+    </div>
+  </div>
+
+  <div class="dossier-card">
+    <div class="card-num">MISSION 04 <span class="duration-pill">Jan 2021 – Aug 2025</span></div>
+    <h3>Enterprise RCA Governance & CAPA Framework</h3>
+    <p>Established RCA governance and corrective action tracking for major incidents. Implemented structured RCA reviews, ownership tracking, escalation management.</p>
+    <div class="result-flag">▶ Led 150+ RCA investigations. Increased accountability and remediation visibility across the enterprise.</div>
+    <div class="tag-row">
+      <span class="mini-tag">5 Whys</span><span class="mini-tag">Fishbone</span><span class="mini-tag">CAPA</span><span class="mini-tag">Exec Reporting</span>
+    </div>
+  </div>
+
+  <div class="dossier-card">
+    <div class="card-num">MISSION 05 <span class="duration-pill">Jan 2020 – Jan 2021</span></div>
+    <h3>Critical Incident Recovery & Service Continuity</h3>
+    <p>Directed P1/P2 recovery activities, managed technical bridges during high-impact production incidents across global environments.</p>
+    <div class="result-flag">▶ Strengthened MTTR discipline. Improved transition of recurring incidents into structured Problem Management.</div>
+    <div class="tag-row">
+      <span class="mini-tag">P1/P2 Mgmt</span><span class="mini-tag">ITIL</span><span class="mini-tag">Service Continuity</span><span class="mini-tag">Vendor Mgmt</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- SKILLS -->
+<div class="skills-section" id="skills">
+<section class="section" style="background:var(--panel);border-top:1px solid var(--border)">
+  <div class="section-label">Sector 4 · Driver Profile</div>
+  <div class="section-title">Core<br/><span>Skills</span></div>
+  <div class="skills-cloud fade-up">
+    <span class="skill-tag gold">Problem Management</span>
+    <span class="skill-tag gold">Critical Incident Management</span>
+    <span class="skill-tag gold">RCA</span>
+    <span class="skill-tag gold">ITIL</span>
+    <span class="skill-tag">ServiceNow</span>
+    <span class="skill-tag">KEDB</span>
+    <span class="skill-tag">PIR / PRB</span>
+    <span class="skill-tag">CAPA</span>
+    <span class="skill-tag">Change Management</span>
+    <span class="skill-tag">Major Incident Management</span>
+    <span class="skill-tag">Executive Reporting</span>
+    <span class="skill-tag">Stakeholder Management</span>
+    <span class="skill-tag">Incident Trend Analysis</span>
+    <span class="skill-tag">Operational Resilience</span>
+    <span class="skill-tag">AI-Assisted Analytics</span>
+  </div>
+
+  <div style="margin-top:56px">
+    <div class="section-label" style="margin-bottom:8px">Pit Crew · Tools</div>
+    <div class="tools-grid">
+      <div class="tool-item">ServiceNow</div>
+      <div class="tool-item">JIRA</div>
+      <div class="tool-item">Power BI</div>
+      <div class="tool-item">Tableau</div>
+      <div class="tool-item">Excel</div>
+      <div class="tool-item">MS Teams</div>
+      <div class="tool-item">WebEx</div>
+      <div class="tool-item">PowerPoint</div>
+      <div class="tool-item">Gen AI Tools</div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- CERTIFICATIONS -->
+<div class="podium-section">
+<section class="section">
+  <div class="section-label">Podium · Certifications</div>
+  <div class="section-title">Honours &amp;<br/><span>Licences</span></div>
+  <div class="cert-list fade-up">
+    <div class="cert-item">ITIL Foundation</div>
+    <div class="cert-item">Advanced Data Analytics</div>
+    <div class="cert-item">Python for Data Analysis</div>
+    <div class="cert-item">Tableau / Power BI</div>
+    <div class="cert-item">Generative AI & Prompt Engineering</div>
+    <div class="cert-item">Advanced Microsoft Excel</div>
+  </div>
+</section>
+</div>
+
+<div class="checkered"></div>
+
+<!-- FINISH / CONTACT -->
+<section class="finish" id="contact">
+  <div style="position:relative;z-index:1">
+    <div class="section-label" style="margin-bottom:12px">Pit Lane · Contact</div>
+    <h2>Race to the<br/><span>Finish Line</span></h2>
+    <p>Ready to bring discipline, urgency, and intelligence to your operations. Let's talk about how I can reduce your recurring incidents and protect your critical services.</p>
+    <div class="contact-cards">
+      <div class="contact-card" onclick="window.location='mailto:08fawazahmed@gmail.com'">✉ 08fawazahmed@gmail.com</div>
+      <div class="contact-card" onclick="window.location='tel:+917795751979'">📞 +91 7795751979</div>
+      <div class="contact-card">📍 Bengaluru, India</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 FAWAZ AHMED MUJAWAR</span>
+  <span>PROBLEM MANAGER · BENGALURU · IND</span>
+</footer>
+
+<script>
+const sectorBar = document.getElementById('sectorBar');
+window.addEventListener('scroll', () => {
+  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  sectorBar.style.height = pct + '%';
+});
+
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+document.querySelectorAll('.skill-tag').forEach(tag => {
+  tag.addEventListener('click', function(){ this.classList.toggle('active'); });
+});
+
+const counters = document.querySelectorAll('.t-value');
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(!entry.isIntersecting) return;
+    const el = entry.target;
+    const text = el.textContent;
+    const numMatch = text.match(/[\d.]+/);
+    if(!numMatch) return;
+    const target = parseFloat(numMatch[0]);
+    const suffix = text.replace(numMatch[0], '');
+    let start = 0;
+    const duration = 1200;
+    const step = (timestamp) => {
+      if(!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(ease * target * 10) / 10;
+      el.textContent = (current % 1 === 0 ? Math.round(current) : current) + suffix;
+      if(progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+    counterObs.unobserve(el);
+  });
+}, { threshold: 0.5 });
+counters.forEach(el => counterObs.observe(el));
+</script>
+</body>
+</html>
